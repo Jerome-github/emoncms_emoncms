@@ -761,34 +761,39 @@ class Process
               $value = 65536 + $value;
       }
 
-      if($value>0) {
-   
-      $pulse_diff = 0;
-
       // Get last value
       error_log("Feed:".$feedid);
       $last = $this->feed->get_timevalue($feedid);
       $last_value = $last['value'];
       $last_time = strtotime($last['time']); 
-     
+   
       if ($last_time) {
-        // Need to handle resets of the pulse value (and negative 2**15?)
-        if ($value >= $last_value)
-        {
-          $pulse_diff = $value - $last_value;
-        }
-        else
-        {
-          $pulse_diff = $value;
-        }
-      }
-      error_log("Value:".$value." Last:".$last_value." Diff:".$pulse_diff);
       
+        $pulse_diff = $value - $last_value;
+      
+        // Manage counter reset / wrap around
+        if ($pulse_diff < 0) {
+          
+          $pulse_diff = 65536 + $pulse_diff;
+
+          if ($pulse_diff > 1 * ($time_now - $last_time)){
+            // This can't be a wrap around, there must have been a reset
+            $pulse_diff = $value;
+          }
+        }
+
+      } else {
+
+      $pulse_diff = $value;
+
+      }
+
+      error_log("Value:".$value." Last:".$last_value." Diff:".$pulse_diff);
+    
       // Save to allow next difference calc. 
       $this->feed->insert_data($feedid,$time_now,$time_now,$value);
 
       return $pulse_diff;
-    	}
     }
     
     public function kwh_to_power($feedid,$time_now,$value)

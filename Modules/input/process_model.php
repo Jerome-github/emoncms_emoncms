@@ -256,6 +256,7 @@ class Process
 
           $process_public = $process_list[$processid][2];	            // get process public function name
           $value = $this->$process_public($arg,$time,$value);		      // execute process public function
+	  if ($value === NULL) {break;}
         }
     }
 
@@ -792,6 +793,8 @@ class Process
     
       // Save to allow next difference calc. 
       $this->feed->insert_data($feedid,$time_now,$time_now,$value);
+
+      if ($pulse_diff == 0) {$pulse_diff = NULL;}
 
       return $pulse_diff;
     }

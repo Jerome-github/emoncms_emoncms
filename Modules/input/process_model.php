@@ -814,9 +814,9 @@ class Process
         $time_elapsed = ($time_now - $last_time);   // seconds
         error_log("Time elapsed:".$time_elapsed);
         $power = ($value * 3600 / $time_elapsed);
+        $this->feed->insert_data($feedid,$last_time,$last_time,$power);
       }
       
-      $this->feed->insert_data($feedid,$last_time,$last_time,$power);
       $this->feed->insert_data($feedid,$time_now,$time_now,$power);
 
       return $power;

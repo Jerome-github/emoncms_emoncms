@@ -763,7 +763,6 @@ class Process
       }
 
       // Get last value
-      error_log("Feed:".$feedid);
       $last = $this->feed->get_timevalue($feedid);
       $last_value = $last['value'];
       $last_time = strtotime($last['time']); 
@@ -789,8 +788,6 @@ class Process
 
       }
 
-      error_log("Value:".$value." Last:".$last_value." Diff:".$pulse_diff);
-    
       // Save to allow next difference calc. 
       $this->feed->insert_data($feedid,$time_now,$time_now,$value);
 
@@ -805,14 +802,12 @@ class Process
       $power = 0;
 
       // Get last time
-      error_log("Feed:".$feedid);
       $last = $this->feed->get_timevalue($feedid);
       $last_value = $last['value'];
       $last_time = strtotime($last['time']); 
 
       if ($last_time) {
         $time_elapsed = ($time_now - $last_time);   // seconds
-        error_log("Time elapsed:".$time_elapsed);
         $power = ($value * 3600 / $time_elapsed);
         $this->feed->insert_data($feedid,$last_time,$last_time,$power);
       }

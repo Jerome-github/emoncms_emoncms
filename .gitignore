@@ -1,9 +1,9 @@
 .project
+debian/emoncms*
 settings.php
 Modules/sync
 Modules/event
 Modules/energyaudit
-Modules/node
 Modules/auto
 Modules/energy
 Modules/energyform
@@ -19,3 +19,7 @@ Modules/feedconvert
 Modules/report
 Modules/notify
 Modules/converttotimestore
+Modules/mqtt
+Modules/packetgen
+Modules/openbem
+Modules/scheduler

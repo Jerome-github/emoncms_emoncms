@@ -123,6 +123,16 @@ var customtablefields = {
                 key = 'max'; type = 2; break;
               case 28:
                 key = 'min'; type = 2; break;
+              case 29:
+                key = '+ feed'; type = 4; break;
+              case 30:
+                key = '- feed'; type = 4; break;
+              case 31:
+                key = 'x feed'; type = 4; break;
+              case 32:
+                key = '/ feed'; type = 4; break;
+              case 33:
+                key = '= 0'; type = 3; break;
             }  
 
             value = keyvalue[1];
@@ -141,6 +151,9 @@ var customtablefields = {
               case 3:
                 type = ''; color = 'important';
                 value = ''; // Argument type is NONE, we don't mind the value
+                break;
+              case 4:
+                type = 'feed: '; color = 'warning';
                 break;
             }
 
@@ -176,6 +189,7 @@ var customtablefields = {
 // Calculate and color updated time
 function list_format_updated(time)
 {
+  time = time * 1000;
   var now = (new Date()).getTime();
   var update = (new Date(time)).getTime();
   var lastupdate = (now-update)/1000;

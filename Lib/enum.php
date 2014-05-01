@@ -18,4 +18,8 @@
     const MYSQL = 0;
     const TIMESTORE = 1;
     const PHPTIMESERIES = 2;
+    const GRAPHITE = 3;
+    const PHPTIMESTORE = 4;
+    const PHPFINA = 5;
+    const PHPFIWA = 6;
   }

@@ -17,12 +17,12 @@ var table = {
     'deletedata':true,
 
     'sortfield':null,
-
+    'sortable':true,
     'groupprefix':"",
      
     'draw':function()
     {
-        if (table.data) {
+        if (table.data && table.sortable) {
           table.data.sort(function(a,b) {
             if(a[table.sortfield]<b[table.sortfield]) return -1;
             if(a[table.sortfield]>b[table.sortfield]) return 1;
@@ -69,6 +69,8 @@ var table = {
         $(table.element).html("<table class='table table-hover'>"+html+"</table>");
 
         if (table.eventsadded==false) {table.add_events(); table.eventsadded = true}
+        
+        $(table.element).trigger("onDraw");
     },
 
     'draw_row': function(row)
@@ -207,6 +209,11 @@ var table = {
                 return "<select style='width:120px'>"+options+"</select>";
             },
             'save': function (row,field) { return $("[row="+row+"][field="+field+"] select").val() },
+        },
+        
+        'fixedselect':
+        {
+            'draw': function (row,field) { return table.fields[field].options[table.data[row][field]] }
         },
 
         'checkbox':
